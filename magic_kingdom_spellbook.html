@@ -1,0 +1,417 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--n-orange:#E8521A;--n-dark:#1a1209;--n-gold:#C98A1A;--n-navy:#0D1B2A}
+.nb{font-family:'Cinzel',serif}
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Sans+JP:wght@400;500&display=swap');
+body{font-family:'Noto Sans JP',var(--font-sans)}
+
+.sb{padding:1rem 0}
+.sb-header{display:flex;align-items:center;gap:12px;margin-bottom:1rem;flex-wrap:wrap}
+.sb-title{font-family:'Cinzel',serif;font-size:18px;font-weight:600;color:var(--color-text-primary)}
+.theme-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+.tab{font-size:12px;padding:5px 12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary);transition:all .15s}
+.tab.active{background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-border-info)}
+.tab.naruto-active{background:#FFF1EA;color:#993C1D;border-color:#F0997B}
+.filter-row{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
+.filter-row span{font-size:12px;color:var(--color-text-tertiary)}
+.pill{font-size:12px;padding:4px 10px;border-radius:99px;border:0.5px solid var(--color-border-tertiary);cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary)}
+.pill.on{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-secondary)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px;cursor:pointer;transition:border-color .15s}
+.card:hover{border-color:var(--color-border-secondary)}
+.card.selected{border:1.5px solid var(--color-border-info)}
+.card.naruto-card{border-left:3px solid #E8521A}
+.card.naruto-card.selected{border:1.5px solid #E8521A}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.spell-name{font-size:14px;font-weight:500;color:var(--color-text-primary);line-height:1.3}
+.badge{font-size:10px;padding:2px 7px;border-radius:99px;white-space:nowrap;flex-shrink:0}
+.badge.fire{background:#FAECE7;color:#993C1D}
+.badge.water{background:#E6F1FB;color:#185FA5}
+.badge.void{background:#EEEDFE;color:#534AB7}
+.badge.light{background:#FAEEDA;color:#854F0B}
+.badge.neutral{background:#F1EFE8;color:#5F5E5A}
+.badge.all{background:#EAF3DE;color:#3B6D11}
+.badge.combo{background:#FBEAF0;color:#993556}
+.badge.lightning{background:#FAEEDA;color:#854F0B}
+.badge.wind{background:#EAF3DE;color:#3B6D11}
+.badge.shadow{background:#EEEDFE;color:#534AB7}
+.gesture-box{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.gesture-svg{flex-shrink:0}
+.gesture-label{font-size:11px;color:var(--color-text-secondary);line-height:1.4}
+.gesture-label strong{display:block;font-size:12px;color:var(--color-text-primary);font-weight:500;margin-bottom:2px}
+.card-meta{font-size:11px;color:var(--color-text-tertiary);line-height:1.5}
+.stars{color:#BA7517;letter-spacing:1px}
+.detail-panel{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;margin-top:1rem}
+.detail-panel.naruto-detail{border-top:3px solid #E8521A}
+.dp-name{font-family:'Cinzel',serif;font-size:20px;font-weight:600;color:var(--color-text-primary);margin-bottom:4px}
+.dp-sub{font-size:13px;color:var(--color-text-secondary);margin-bottom:14px}
+.steps{counter-reset:step}
+.step{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start}
+.step-num{width:22px;height:22px;border-radius:50%;background:var(--color-background-info);color:var(--color-text-info);font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step-num.naruto-num{background:#FFF1EA;color:#993C1D}
+.step-text{font-size:13px;color:var(--color-text-primary);line-height:1.6}
+.tip-box{background:var(--color-background-warning);border-radius:var(--border-radius-md);padding:10px 12px;font-size:12px;color:var(--color-text-warning);margin-top:12px}
+.empty{text-align:center;padding:2rem;color:var(--color-text-tertiary);font-size:14px}
+.dp-close{float:right;font-size:12px;color:var(--color-text-tertiary);cursor:pointer;padding:2px 6px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md)}
+.dp-close:hover{color:var(--color-text-primary)}
+.hand-seals-row{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+.seal-item{display:flex;flex-direction:column;align-items:center;gap:4px}
+.seal-img{width:52px;height:52px;object-fit:cover;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary)}
+.seal-label{font-size:9px;color:var(--color-text-tertiary);text-align:center;max-width:52px;line-height:1.2}
+.seal-arrow{font-size:14px;color:var(--color-text-tertiary);align-self:center;margin-top:-14px}
+.seals-section-title{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.jutsu-banner{display:flex;align-items:center;gap:10px;background:#FFF1EA;border-radius:var(--border-radius-md);padding:8px 12px;margin-bottom:12px}
+.jutsu-kanji{font-size:28px;color:#993C1D;line-height:1}
+.jutsu-info{font-size:12px;color:#993C1D;line-height:1.5}
+.jutsu-info strong{display:block;font-size:13px;font-family:'Cinzel',serif}
+</style>
+
+<div class="sb">
+<div class="sb-header">
+  <div class="sb-title nb">Spell Book</div>
+  <input id="search" type="text" placeholder="Search spells..." style="flex:1;min-width:140px;font-size:13px;padding:6px 10px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary)">
+</div>
+
+<div class="theme-tabs" id="themes"></div>
+<div class="filter-row">
+  <span>Shape:</span>
+  <div id="shapes"></div>
+</div>
+
+<div class="grid" id="grid"></div>
+<div id="detail"></div>
+</div>
+
+<script>
+const SPELLS = [
+  {name:'Arcane Ward',theme:'arcane',element:'all',shape:'circle',difficulty:1,combo:false,
+   desc:'A sacred-geometry protection circle. Your most reliable defensive spell.',
+   steps:['Hold your index finger up and tracking on','Draw a full circle — close the loop back to your start point','Hold still for 0.5s to confirm','Release to unleash the ward'],
+   tip:'Keep the circle smooth and roughly uniform — jagged circles may register as spirals.'},
+  {name:'Ignition Pulse',theme:'arcane',element:'fire',shape:'triangle',difficulty:2,combo:false,
+   desc:'A plasma flame triangle that erupts at each vertex.',
+   steps:['Switch to FIRE element (shown in HUD)','Draw 3 clear straight lines forming a triangle','Each corner must have a sharp angle — slow down at turns','Release when the triangle glows orange'],
+   tip:'If only 2 corners are detected, your triangle is too rounded. Use deliberate flicks at each corner.'},
+  {name:'Reality Slice',theme:'arcane',element:'void',shape:'line',difficulty:1,combo:false,
+   desc:'A dimensional cut — fast slashing motion across the screen.',
+   steps:['VOID or FIRE element active','Draw one fast straight line — any direction','The longer and straighter, the stronger the blade','Release triggers the lightning arcs'],
+   tip:'Speed matters more than precision here. A quick swipe is better than a slow careful line.'},
+  {name:'Void Collapse',theme:'arcane',element:'void',shape:'spiral',difficulty:3,combo:false,
+   desc:'Cosmic event horizon. Darkens the frame and pulls everything inward.',
+   steps:['VOID element required','Start at center and spiral outward in a widening coil','Keep rotation consistent — all clockwise or all counter-clockwise','Complete at least 1.5 full revolutions','Hold briefly to charge before release'],
+   tip:'Radius must increase as you spiral. A same-radius loop is detected as a circle instead.'},
+  {name:'Domain of Aether',theme:'arcane',element:'all',shape:'circle_dual',difficulty:4,combo:false,
+   desc:'Domain expansion — draws two concentric circles for a full-screen golden storm.',
+   steps:['Draw a large outer circle first','Without lifting, immediately draw a smaller inner circle','Both must close (start ≈ end)','Full charge builds the golden mandala'],
+   tip:'This is the hardest gesture. Practice each circle separately first, then combine.'},
+  {name:'Exploding Ward',theme:'arcane',element:'all',shape:'combo',difficulty:3,combo:true,
+   desc:'Combo: circle then triangle within 2 seconds.',
+   steps:['Cast Arcane Ward (draw circle)','Immediately draw a triangle before the ward fades','The two shapes combine into the combo','Release — the ward explodes outward'],
+   tip:'You have a 2-second window between shapes. Watch the combo bar at the top of screen.'},
+  {name:'Void Beam',theme:'arcane',element:'void',shape:'combo',difficulty:3,combo:true,
+   desc:'Combo: spiral then line — concentrated void energy beam.',
+   steps:['Cast any spiral spell first','While it is still active, draw a fast straight line','The beam locks onto the spiral center','Fires automatically on detection'],
+   tip:'Direction of the line sets the beam angle.'},
+
+  {name:'Chidori',theme:'naruto',element:'lightning',shape:'line',difficulty:3,combo:false,
+   kanji:'千鳥',romaji:'Chidori — One Thousand Birds',
+   desc:'Lightning concentrated into a piercing thrust. Kakashi\'s signature jutsu, passed to Sasuke.',
+   steps:['Enter Naruto door','Perform the hand seals: Ox → Rabbit → Monkey','Draw a fast straight line — direction sets the thrust angle','Blue lightning converges toward the endpoint','Release for the full thousand-birds storm burst'],
+   tip:'Longer lines make more dramatic Chidori. Short jabs work but look weak.',
+   seals:[
+     {name:'Ox',img:'https://images-cdn.reedpop.com/mg/nw/cms/sites/6/2023/05/naruto-hand-signs.jpg',alt:'Ox seal'},
+     {name:'Rabbit',img:'https://images-cdn.reedpop.com/mg/nw/cms/sites/6/2023/05/naruto-hand-signs.jpg',alt:'Rabbit seal'},
+     {name:'Monkey',img:'https://images-cdn.reedpop.com/mg/nw/cms/sites/6/2023/05/naruto-hand-signs.jpg',alt:'Monkey seal'},
+   ],
+   sealImg:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Chidori_hand_seal_diagram.png/640px-Chidori_hand_seal_diagram.png'
+  },
+
+  {name:'Rasengan',theme:'naruto',element:'wind',shape:'circle',difficulty:2,combo:false,
+   kanji:'螺旋丸',romaji:'Rasengan — Spiraling Sphere',
+   desc:'Compressed rotating sphere of pure chakra. Naruto\'s signature jutsu, created by the Fourth Hokage.',
+   steps:['Enter Naruto (Konoha Ninja) door','No hand seals required — only shape manipulation','Draw a circle with your fingertip','The sphere appears and charges at your palm','Release — concentric rings spin and expand'],
+   tip:'The circle needs at least 60px radius. Small circles may not register.',
+   seals:[],
+  },
+
+  {name:'Kage Bunshin',theme:'naruto',element:'shadow',shape:'spiral',difficulty:3,combo:false,
+   kanji:'影分身の術',romaji:'Kage Bunshin no Jutsu — Shadow Clone Jutsu',
+   desc:'Shadow Clone Jutsu — four solid ghost clones burst outward with full chakra and memories.',
+   steps:['Enter Naruto door','Perform the hand seal: Cross (Kage Bunshin only needs one seal!)','Draw a spiral with at least 1.5 turns','Four clone silhouettes appear around the center','Charge builds, release detonates all clones'],
+   tip:'Clones appear in compass directions. Draw larger spirals for wider clone spread.',
+   seals:[
+     {name:'Cross',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Shadow_Clone_Jutsu_sign.png/320px-Shadow_Clone_Jutsu_sign.png',alt:'Cross seal hand sign'},
+   ],
+  },
+
+  {name:'Katon: Goka',theme:'naruto',element:'fire',shape:'triangle',difficulty:2,combo:false,
+   desc:'Great Fireball Jutsu — expanding fireball erupts into a fire wall.',
+   steps:['Enter Naruto door','Draw a triangle with sharp corners','A growing fireball charges at center','Release — full-screen fire wall erupts'],
+   tip:'FIRE element adds orange screen tint during charge, confirming detection.'},
+  {name:'Kagemane no Jutsu',theme:'naruto',element:'shadow',shape:'square',difficulty:3,combo:false,
+   desc:'Shadow Bind — dark tendrils creep outward and freeze the target.',
+   steps:['Enter Naruto door','Draw a square with 4 clear right-angle corners','Shadow tendrils extend from center as you charge','Hold longer for longer reach before releasing'],
+   tip:'Square detection is the strictest — each angle must be near 90°. Go slowly at corners.'},
+
+  {name:'Gomu Gomu no Pistol',theme:'one_piece',element:'all',shape:'line',difficulty:1,combo:false,
+   desc:'Rubber punch stretch beam — the simplest Luffy move.',
+   steps:['Enter Devil Fruit User door','Draw a straight line — direction is the punch direction','A stretching rubber arm extends along the line','Release for the shockwave impact burst'],
+   tip:'This is the fastest spell in the game. Great for quick combos.'},
+  {name:'Gomu Gomu no Cannon',theme:'one_piece',element:'all',shape:'circle',difficulty:2,combo:false,
+   desc:'Giant compressed rubber ball that erupts on impact.',
+   steps:['Enter Devil Fruit User door','Draw a full circle','The ball inflates and pulses as it charges','Release — massive burst explosion with ring shockwaves'],
+   tip:'Bigger circles = bigger cannon ball. Circle radius directly scales the explosion.'},
+  {name:'Gear Third: King Kong Gun',theme:'one_piece',element:'all',shape:'triangle',difficulty:2,combo:false,
+   desc:'Enormous inflating fist — the biggest hit in One Piece.',
+   steps:['Enter Devil Fruit User door','Draw a triangle','A massive red sphere inflates at center (can fill half the screen)','Release for the biggest explosion in the game'],
+   tip:'Gear Third has the longest charge time. Let it fully inflate for maximum damage area.'},
+  {name:'Gear Second',theme:'one_piece',element:'all',shape:'spiral',difficulty:3,combo:false,
+   desc:'Blood pump overdrive — rising red steam aura across the whole screen.',
+   steps:['Enter Devil Fruit User door','Draw a spiral (1.5+ turns)','Red steam rings expand across the screen as you charge','Release — full screen storm + burst particles'],
+   tip:'Gear Second is more aura than projectile. Use it before another move for maximum visual effect.'},
+  {name:'Elephant Gatling',theme:'one_piece',element:'all',shape:'square',difficulty:3,combo:false,
+   desc:'Rotating barrage of 8 rubber-arm impacts around a central point.',
+   steps:['Enter Devil Fruit User door','Draw a square with 4 sharp corners','8 spinning impact circles appear around center','Release — barrage hits at every angle simultaneously'],
+   tip:'The impacts rotate faster as charge builds. Holding longer makes the final burst wider.'},
+];
+
+const THEMES_LIST = [
+  {id:'all',label:'All doors'},
+  {id:'arcane',label:'Arcane Master'},
+  {id:'naruto',label:'Konoha Ninja'},
+  {id:'one_piece',label:'Devil Fruit User'},
+];
+const SHAPES = ['all','circle','line','triangle','spiral','square','combo'];
+const SHAPE_ICONS = {circle:'○',line:'—',triangle:'△',spiral:'@',square:'□',combo:'✦',all:'·'};
+
+let activeTheme='all', activeShape='all', activeSpell=null, searchQ='';
+
+function drawGesture(shape, size=44){
+  const s=size, h=s/2;
+  let path='';
+  if(shape==='circle'){
+    path=`<circle cx="${h}" cy="${h}" r="${h*0.72}" fill="none" stroke="var(--color-text-info)" stroke-width="2"/>
+    <polygon points="${h},${h-5} ${h+4},${h+3} ${h-4},${h+3}" fill="var(--color-text-info)"/>`;
+  } else if(shape==='line'){
+    path=`<line x1="6" y1="${s-8}" x2="${s-6}" y2="8" stroke="var(--color-text-info)" stroke-width="2.5" stroke-linecap="round"/>
+    <polygon points="${s-6},8 ${s-12},12 ${s-8},16" fill="var(--color-text-info)"/>`;
+  } else if(shape==='triangle'){
+    path=`<polygon points="${h},6 ${s-6},${s-6} 6,${s-6}" fill="none" stroke="var(--color-text-info)" stroke-width="2" stroke-linejoin="round"/>
+    <polygon points="${h},6 ${h+5},14 ${h-5},14" fill="var(--color-text-info)"/>`;
+  } else if(shape==='spiral'){
+    path=`<path d="M${h},${h} m12,0 a12,12 0 1,0 -14,14 a18,18 0 1,0 18,-20" fill="none" stroke="var(--color-text-info)" stroke-width="2" stroke-linecap="round"/>`;
+  } else if(shape==='square'){
+    path=`<rect x="7" y="7" width="${s-14}" height="${s-14}" fill="none" stroke="var(--color-text-info)" stroke-width="2"/>
+    <polygon points="7,7 15,7 7,15" fill="var(--color-text-info)"/>`;
+  } else if(shape==='combo'){
+    path=`<text x="${h}" y="${h+5}" text-anchor="middle" font-size="20" fill="var(--color-text-info)">✦</text>`;
+  } else {
+    path=`<text x="${h}" y="${h+5}" text-anchor="middle" font-size="18" fill="var(--color-text-tertiary)">?</text>`;
+  }
+  return `<svg class="gesture-svg" width="${s}" height="${s}" viewBox="0 0 ${s} ${s}">${path}</svg>`;
+}
+
+const ELEMENT_COLORS = {fire:'fire',water:'water',void:'void',light:'light',neutral:'neutral',all:'all',combo:'combo',lightning:'lightning',wind:'wind',shadow:'shadow'};
+const ELEMENT_LABELS = {fire:'Fire',water:'Water',void:'Void',light:'Light',neutral:'Neutral',all:'All elements',combo:'Combo',lightning:'Lightning',wind:'Wind',shadow:'Shadow'};
+
+function elBadge(el){
+  return `<span class="badge ${ELEMENT_COLORS[el]||'neutral'}">${ELEMENT_LABELS[el]||el}</span>`;
+}
+
+function stars(n){return '<span class="stars">'+'★'.repeat(n)+'☆'.repeat(4-n)+'</span>'}
+
+function filtered(){
+  return SPELLS.filter(s=>{
+    if(activeTheme!=='all' && s.theme!==activeTheme) return false;
+    if(activeShape!=='all' && s.shape!==activeShape) return false;
+    if(searchQ && !s.name.toLowerCase().includes(searchQ.toLowerCase())) return false;
+    return true;
+  });
+}
+
+function renderTabs(){
+  document.getElementById('themes').innerHTML = THEMES_LIST.map(t=>{
+    const isActive = activeTheme===t.id;
+    const cls = isActive ? (t.id==='naruto' ? 'tab naruto-active' : 'tab active') : 'tab';
+    return `<div class="${cls}" onclick="setTheme('${t.id}')">${t.label}</div>`;
+  }).join('');
+}
+
+function renderShapes(){
+  document.getElementById('shapes').innerHTML = SHAPES.map(sh=>
+    `<div class="pill ${activeShape===sh?'on':''}" onclick="setShape('${sh}')">${SHAPE_ICONS[sh]} ${sh==='all'?'All':sh}</div>`
+  ).join('');
+}
+
+function renderGrid(){
+  const spells = filtered();
+  const el = document.getElementById('grid');
+  if(!spells.length){
+    el.innerHTML='<div class="empty" style="grid-column:1/-1">No spells match your filters.</div>';
+    return;
+  }
+  el.innerHTML = spells.map(s=>{
+    const isNaruto = s.theme==='naruto';
+    const cardCls = `card ${activeSpell===s.name?'selected':''} ${isNaruto?'naruto-card':''}`;
+    return `
+    <div class="${cardCls}" onclick="openDetail('${s.name.replace(/'/g,"\\'")}')">
+      <div class="card-top">
+        <div class="spell-name">${s.name}${s.kanji?` <span style="font-size:11px;color:var(--color-text-tertiary)">${s.kanji}</span>`:''}
+        </div>
+        ${elBadge(s.element)}
+      </div>
+      <div class="gesture-box">
+        ${drawGesture(s.shape,40)}
+        <div class="gesture-label">
+          <strong>${s.shape==='combo'?'Combo gesture':s.shape.charAt(0).toUpperCase()+s.shape.slice(1)+' shape'}</strong>
+          ${isNaruto ? 'Draw with index finger' : 'Draw with index finger'}
+        </div>
+      </div>
+      <div class="card-meta">
+        ${stars(s.difficulty)} Difficulty ${s.difficulty}/4<br>
+        ${s.combo?'<span style="color:var(--color-text-info)">Combo spell</span>':'Single gesture'}
+        ${isNaruto && s.seals ? `<br><span style="color:#993C1D">${s.seals.length===0?'No hand seals':s.seals.length+' hand seal'+(s.seals.length>1?'s':'')}</span>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+const CHIDORI_SEALS = [
+  {name:'Ox (丑)', src:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Naruto-hand-seals-ox.jpg/120px-Naruto-hand-seals-ox.jpg'},
+  {name:'Rabbit (卯)', src:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Naruto-hand-seals-rabbit.jpg/120px-Naruto-hand-seals-rabbit.jpg'},
+  {name:'Monkey (申)', src:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Naruto-hand-seals-monkey.jpg/120px-Naruto-hand-seals-monkey.jpg'},
+];
+
+function buildSealsHTML(spell) {
+  if(!spell.kanji) return '';
+  
+  const bannerEl = `<div class="jutsu-banner">
+    <div class="jutsu-kanji">${spell.kanji}</div>
+    <div class="jutsu-info"><strong>${spell.romaji||spell.name}</strong>${spell.theme==='naruto'?'Konoha Jutsu':''}</div>
+  </div>`;
+
+  let sealsEl = '';
+
+  if(spell.name==='Chidori'){
+    sealsEl = `
+    <div style="margin-top:12px">
+      <div class="seals-section-title">Hand seals (手印) sequence</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:flex-end">
+        ${[
+          {name:'Ox (丑)', src:'https://i.imgur.com/eDtKiLB.png'},
+          {name:'Rabbit (卯)', src:'https://i.imgur.com/pMFgFAk.png'},
+          {name:'Monkey (申)', src:'https://i.imgur.com/YZnKtj2.png'},
+        ].map((seal,i,arr)=>`
+          <div class="seal-item">
+            <img class="seal-img" src="${seal.src}" alt="${seal.name} hand sign" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+            <div style="display:none;width:52px;height:52px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);align-items:center;justify-content:center;font-size:11px;color:var(--color-text-tertiary);text-align:center;line-height:1.2;padding:4px">${seal.name}</div>
+            <div class="seal-label">${seal.name}</div>
+          </div>
+          ${i<arr.length-1?'<div class="seal-arrow">→</div>':''}`).join('')}
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;margin-left:8px">
+          <div style="width:52px;height:52px;background:#FFF1EA;border-radius:var(--border-radius-md);border:0.5px solid #F0997B;display:flex;align-items:center;justify-content:center">
+            <svg width="28" height="28" viewBox="0 0 28 28">
+              <line x1="4" y1="24" x2="24" y2="4" stroke="#993C1D" stroke-width="3" stroke-linecap="round"/>
+              <polygon points="24,4 18,6 22,10" fill="#993C1D"/>
+              <path d="M8,20 Q14,14 20,10" stroke="#E8521A" stroke-width="1.5" fill="none" stroke-dasharray="3,2"/>
+            </svg>
+          </div>
+          <div class="seal-label" style="color:#993C1D">Thrust!</div>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--color-text-tertiary);margin-top:8px;line-height:1.5">Ox → Rabbit → Monkey — only 3 seals needed, reflecting Sasuke's mastery</p>
+    </div>`;
+  } else if(spell.name==='Rasengan'){
+    sealsEl = `
+    <div style="margin-top:12px">
+      <div class="seals-section-title">Hand seals (手印) sequence</div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="background:#EAF3DE;border:0.5px solid #C0DD97;border-radius:var(--border-radius-md);padding:10px 14px;font-size:12px;color:#3B6D11;line-height:1.5">
+          <strong style="display:block;font-size:13px;margin-bottom:2px">No hand seals required</strong>
+          Rasengan uses shape transformation only — pure chakra control without seals. Mastering it requires years of training.
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+          <div style="width:56px;height:56px;background:#EAF3DE;border-radius:50%;border:0.5px solid #C0DD97;display:flex;align-items:center;justify-content:center">
+            <svg width="32" height="32" viewBox="0 0 32 32">
+              <circle cx="16" cy="16" r="12" fill="none" stroke="#3B6D11" stroke-width="2"/>
+              <path d="M16,4 a12,12 0 0,1 12,12" stroke="#639922" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="16" cy="16" r="5" fill="none" stroke="#3B6D11" stroke-width="1.5" stroke-dasharray="3,2"/>
+            </svg>
+          </div>
+          <div class="seal-label" style="color:#3B6D11">Spin!</div>
+        </div>
+      </div>
+    </div>`;
+  } else if(spell.name==='Kage Bunshin'){
+    sealsEl = `
+    <div style="margin-top:12px">
+      <div class="seals-section-title">Hand seal (手印) — just one!</div>
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <div class="seal-item">
+          <div style="width:64px;height:64px;background:#EEEDFE;border-radius:var(--border-radius-md);border:0.5px solid #AFA9EC;display:flex;align-items:center;justify-content:center">
+            <svg width="40" height="40" viewBox="0 0 40 40">
+              <rect x="8" y="18" width="10" height="14" rx="2" fill="none" stroke="#534AB7" stroke-width="2"/>
+              <rect x="22" y="18" width="10" height="14" rx="2" fill="none" stroke="#534AB7" stroke-width="2"/>
+              <line x1="18" y1="25" x2="22" y2="25" stroke="#534AB7" stroke-width="2"/>
+              <circle cx="10" cy="12" r="3" fill="none" stroke="#534AB7" stroke-width="1.5"/>
+              <circle cx="30" cy="12" r="3" fill="none" stroke="#534AB7" stroke-width="1.5"/>
+              <line x1="13" y1="14" x2="18" y2="18" stroke="#534AB7" stroke-width="1.5"/>
+              <line x1="27" y1="14" x2="22" y2="18" stroke="#534AB7" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="seal-label" style="color:#534AB7">Cross (十字)</div>
+        </div>
+        <div style="background:#EEEDFE;border:0.5px solid #AFA9EC;border-radius:var(--border-radius-md);padding:10px 12px;font-size:12px;color:#534AB7;line-height:1.5;flex:1">
+          <strong style="display:block;font-size:13px;margin-bottom:2px">The Cross seal (十字印)</strong>
+          Index fingers and thumbs crossed together. Naruto's most iconic hand sign — used exclusively for Shadow Clone Jutsu. Unlike regular clones, these have physical form and share memories.
+        </div>
+      </div>
+    </div>`;
+  }
+
+  return bannerEl + sealsEl;
+}
+
+function renderDetail(){
+  const el=document.getElementById('detail');
+  if(!activeSpell){el.innerHTML='';return;}
+  const s=SPELLS.find(x=>x.name===activeSpell);
+  if(!s){el.innerHTML='';return;}
+  const isNaruto = s.theme==='naruto';
+  const panelCls = `detail-panel${isNaruto?' naruto-detail':''}`;
+  el.innerHTML=`
+    <div class="${panelCls}">
+      <span class="dp-close" onclick="closeDetail()">close</span>
+      <div class="dp-name">${s.name}</div>
+      <div class="dp-sub">${elBadge(s.element)} &nbsp; ${stars(s.difficulty)} &nbsp; ${s.combo?'Combo':'Single gesture'}</div>
+      <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:14px;line-height:1.6">${s.desc}</p>
+      ${isNaruto ? buildSealsHTML(s) : ''}
+      <div style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:8px;margin-top:14px;text-transform:uppercase;letter-spacing:.5px">How to cast</div>
+      ${s.steps.map((st,i)=>`
+        <div class="step">
+          <div class="step-num${isNaruto?' naruto-num':''}">${i+1}</div>
+          <div class="step-text">${st}</div>
+        </div>
+      `).join('')}
+      <div class="tip-box">Tip: ${s.tip}</div>
+      <div style="display:flex;align-items:center;gap:12px;margin-top:14px">
+        ${drawGesture(s.shape,56)}
+        <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.7">
+          <strong style="display:block;color:var(--color-text-primary);font-size:13px">Gesture: ${s.shape}</strong>
+          Start anywhere on screen<br>Keep index finger raised and visible<br>Move at a steady, deliberate pace
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function setTheme(t){activeTheme=t;activeSpell=null;renderTabs();renderGrid();renderDetail();}
+function setShape(s){activeShape=s;activeSpell=null;renderShapes();renderGrid();renderDetail();}
+function openDetail(name){activeSpell=name;renderGrid();renderDetail();document.getElementById('detail').scrollIntoView({behavior:'smooth',block:'nearest'});}
+function closeDetail(){activeSpell=null;renderGrid();renderDetail();}
+
+document.getElementById('search').addEventListener('input',e=>{searchQ=e.target.value;activeSpell=null;renderGrid();renderDetail();});
+
+renderTabs();renderShapes();renderGrid();renderDetail();
+</script>

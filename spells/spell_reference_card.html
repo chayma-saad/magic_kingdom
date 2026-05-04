@@ -1,0 +1,96 @@
+
+<style>
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;padding:1rem 0}
+  .card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:12px 14px;cursor:default}
+  .card:hover{border-color:var(--color-border-secondary)}
+  .gesture{font-size:32px;margin-bottom:6px;line-height:1}
+  .spell-name{font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0 0 2px}
+  .how{font-size:11px;color:var(--color-text-secondary);margin:0 0 6px}
+  .elem-badge{display:inline-block;font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px;margin-right:4px;margin-bottom:2px}
+  .elem-fire{background:#FF450022;color:#c93a00}
+  .elem-water{background:#00FFFF22;color:#007a7a}
+  .elem-light{background:#FFFACD44;color:#7a6a00}
+  .elem-void{background:#7B00FF22;color:#5c00c7}
+  .elem-any{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+  .combo-section{margin-top:1rem}
+  .combo-section h3{font-size:13px;font-weight:500;color:var(--color-text-secondary);margin:0 0 8px;text-transform:uppercase;letter-spacing:.05em}
+  .combo-row{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);margin-bottom:6px;font-size:12px}
+  .combo-seq{font-weight:500;color:var(--color-text-primary);min-width:120px}
+  .combo-name{color:var(--color-text-secondary)}
+  .section-label{font-size:11px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.06em;text-transform:uppercase;margin:1.2rem 0 6px}
+</style>
+<h2 class="sr-only">AetherScript spell reference card — gestures, elements, and combos</h2>
+
+<div class="section-label">Base spells — gesture → spell</div>
+<div class="grid">
+  <div class="card">
+    <div class="gesture">○</div>
+    <p class="spell-name">Arcane Ward</p>
+    <p class="how">Trace a full circle</p>
+    <span class="elem-badge elem-any">Any</span>
+  </div>
+  <div class="card">
+    <div class="gesture">△</div>
+    <p class="spell-name">Ignition Pulse</p>
+    <p class="how">3 sharp strokes → triangle</p>
+    <span class="elem-badge elem-fire">Fire</span>
+    <span class="elem-badge elem-any">Any</span>
+  </div>
+  <div class="card">
+    <div class="gesture">□</div>
+    <p class="spell-name">Arcane Construct</p>
+    <p class="how">4 strokes → square</p>
+    <span class="elem-badge elem-any">Any</span>
+  </div>
+  <div class="card">
+    <div class="gesture">@</div>
+    <p class="spell-name">Void Collapse</p>
+    <p class="how">Spiral inward / outward</p>
+    <span class="elem-badge elem-void">Void</span>
+    <span class="elem-badge elem-water">Water</span>
+    <span class="elem-badge elem-fire">Fire</span>
+  </div>
+  <div class="card">
+    <div class="gesture">—</div>
+    <p class="spell-name">Reality Slice</p>
+    <p class="how">Fast straight slash</p>
+    <span class="elem-badge elem-any">Any</span>
+    <span class="elem-badge elem-light">Light</span>
+  </div>
+  <div class="card" style="border-color:#7B00FF44">
+    <div class="gesture">⊙</div>
+    <p class="spell-name">Domain of Aether</p>
+    <p class="how">Both hands wide → circle</p>
+    <span class="elem-badge elem-any">Any — most powerful</span>
+  </div>
+</div>
+
+<div class="section-label">Element — how to draw it</div>
+<div class="grid">
+  <div class="card">
+    <p class="spell-name" style="color:#007a7a">~ Water</p>
+    <p class="how">Smooth, flowing curves. Steady speed.</p>
+  </div>
+  <div class="card">
+    <p class="spell-name" style="color:#c93a00">⚡ Fire</p>
+    <p class="how">Sharp accelerations, angular turns.</p>
+  </div>
+  <div class="card">
+    <p class="spell-name" style="color:#7a6a00">✦ Light</p>
+    <p class="how">Slow, deliberate, very precise.</p>
+  </div>
+  <div class="card">
+    <p class="spell-name" style="color:#5c00c7">◈ Void</p>
+    <p class="how">Erratic, chaotic, speed varies wildly.</p>
+  </div>
+</div>
+
+<div class="combo-section">
+  <div class="section-label">Combos — draw 2 shapes within 3.5 s</div>
+  <div class="combo-row"><span class="combo-seq">○ → △</span><span class="combo-name">Exploding Ward</span></div>
+  <div class="combo-row"><span class="combo-seq">@ → —</span><span class="combo-name">Void Beam</span></div>
+  <div class="combo-row"><span class="combo-seq">□ → ○</span><span class="combo-name">Barrier Field</span></div>
+  <div class="combo-row"><span class="combo-seq">△ → ○</span><span class="combo-name">Nova Burst</span></div>
+  <div class="combo-row"><span class="combo-seq">— → ○</span><span class="combo-name">Convergence</span></div>
+</div>
