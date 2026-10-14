@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "PowerShell(Get-ChildItem -Path \"c:\\\\Users\\\\2026\\\\Desktop\\\\AI Magic system\\\\aether_script\\\\spells\" | ForEach-Object { \"$\\($_.Name\\) \\($\\($_.Length\\) bytes\\)\" })"
-    ]
-  }
-}
